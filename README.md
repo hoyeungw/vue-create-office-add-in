@@ -1,29 +1,21 @@
-# vue-create-office
+# vue-create-office-add-in
 
-## Project setup
-```
-npm install
-```
+## Usage
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+A simple console debug tool.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### inferFormat()
+inferFormat([]) // "[object Array]"
+inferFormat({}) // "[object Object]"
 
-### Run your tests
-```
-npm run test
-```
+### wL()
+"anything".wL() for console.log("anything") 
 
-### Lints and fixes files
-```
-npm run lint
-```
+## License
+
+[MIT](http://opensource.org/licenses/MIT)
+
+Copyright (c) 2019-present, Haoyang (Vincent) Wang
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

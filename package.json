@@ -1,6 +1,7 @@
 {
-  "name": "vue-create-office",
-  "version": "0.1.0",
+  "name": "vue-create-office-add-in",
+  "version": "0.0.1",
+  "description": "An excel web add-in created via @vue/cli for test",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -8,17 +9,29 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@mdi/font": "^3.6.95",
+    "babel-polyfill": "^6.26.0",
     "core-js": "^2.6.5",
-    "vue": "^2.6.10"
+    "crostab": "^0.1.13",
+    "roboto-fontface": "*",
+    "veho": "^0.1.3",
+    "vue": "^2.6.10",
+    "vuetify": "^2.0.14",
+    "xbrief": "^0.1.20"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.5.5",
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-plugin-eslint": "^3.11.0",
     "@vue/cli-service": "^3.11.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "vue-template-compiler": "^2.6.10"
+    "sass": "^1.17.4",
+    "sass-loader": "^7.1.0",
+    "vue-cli-plugin-vuetify": "^0.6.3",
+    "vue-template-compiler": "^2.6.10",
+    "vuetify-loader": "^1.2.2"
   },
   "eslintConfig": {
     "root": true,
@@ -29,7 +42,10 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-console": "warn",
+      "no-unused-vars": "warn"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
@@ -42,5 +58,22 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hoyeungw/vue-create-office-add-in.git"
+  },
+  "keywords": [
+    "vue",
+    "@vue/cli",
+    "excel",
+    "office",
+    "analytics"
+  ],
+  "author": "Hoyeung Wong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hoyeungw/vue-create-office-add-in"
+  },
+  "homepage": "https://github.com/hoyeungw/vue-create-office-add-in#readme"
 }
