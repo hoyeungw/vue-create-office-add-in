@@ -1,15 +1,11 @@
 # vue-create-office-add-in
 
-## Usage
+## An excel add-in for test
 
-A simple console debug tool.
+An excel web add-in created via @vue/cli for test
 
-### inferFormat()
-inferFormat([]) // "[object Array]"
-inferFormat({}) // "[object Object]"
-
-### wL()
-"anything".wL() for console.log("anything") 
+### Integration
+Vuetify
 
 ## License
 
