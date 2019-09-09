@@ -131,8 +131,8 @@
       <!-- ShortStrings max characters==125. -->
       <bt:ShortStrings>
         <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!" />
-        <bt:String id="CommandsGroup.Label" DefaultValue="Commands Group" />
-        <bt:String id="TaskpaneButton.Label" DefaultValue="Show Taskpane" />
+        <bt:String id="CommandsGroup.Label" DefaultValue="Leagyun Tech" />
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Done By Click" />
       </bt:ShortStrings>
       <!-- LongStrings max characters==250. -->
       <bt:LongStrings>

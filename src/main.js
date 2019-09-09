@@ -4,9 +4,9 @@ import '@mdi/font/css/materialdesignicons.css'
 import Vue from 'vue'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
-import { Str } from 'xbrief'
+import { StrX } from 'xbrief'
 
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 
 // const Office = window.Office
 // Office.initialize = () => {
@@ -20,7 +20,7 @@ Vue.config.productionTip = false
 //   vuetify,
 //   render: h => h(App)
 // }).$mount('#app')
-Str.wL('now it\'s time to load main.js')
+StrX.wL('now it\'s time to load main.js')
 
 const Office = window.Office
 Office.initialize = () => {

@@ -4,5 +4,5 @@ module.exports = {
     https: true,
   },
   runtimeCompiler: true,
-  transpileDependencies: ['vuetify', 'veho'],
+  transpileDependencies: ['vuetify'],
 }
