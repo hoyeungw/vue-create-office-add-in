@@ -20,6 +20,7 @@ Vue.config.productionTip = true
 //   vuetify,
 //   render: h => h(App)
 // }).$mount('#app')
+
 StrX.wL('now it\'s time to load main.js')
 
 const Office = window.Office

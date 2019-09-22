@@ -13,10 +13,12 @@
     "babel-polyfill": "^6.26.0",
     "core-js": "^3.2.1",
     "roboto-fontface": "^0.10.0",
-    "veho": "^0.1.7",
+    "veho": "^0.1.19",
     "vue": "^2.6.10",
-    "vuetify": "^2.0.15",
-    "xbrief": "^0.1.24"
+    "vuetify": "^2.0.18",
+    "xbrief": "^0.1.36",
+    "crostab": "^0.1.24",
+    "elprimero": "^0.0.18"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.6.0",

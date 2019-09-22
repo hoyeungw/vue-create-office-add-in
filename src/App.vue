@@ -1,6 +1,8 @@
 <template>
-  <div id="app">
-    <v-app-bar color="deep-purple accent-4" dense dark>
+  <v-app id="app">
+    <v-navigation-drawer app>
+    </v-navigation-drawer>
+    <v-app-bar color="cyan lighten-1" class="elevation-0" dense dark app>
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
       <v-toolbar-title>CrosTab</v-toolbar-title>
       <div class="flex-grow-1"></div>
@@ -11,7 +13,7 @@
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
       <v-menu left bottom>
-        <template v-slot:activator="{ on }">
+        <template #activator="{ on }">
           <v-btn icon v-on="on">
             <v-icon>mdi-dots-vertical</v-icon>
           </v-btn>
@@ -23,123 +25,113 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <v-expansion-panels>
-      <v-expansion-panel id="done-by-click">
-        <v-expansion-panel-header>Done by Click</v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <v-row>
-            <v-col cols="12">
-              <v-row justify="center">
-                <v-col cols="4" xs="2">
-                  <v-btn class="mx-2 caption" elevation=3 @click="onGetSelectedRange">selected</v-btn>
-                </v-col>
-                <v-col cols="4" md="2">
-                  <v-btn class="mx-2" elevation=3 @click="onGetSurrounding">surround</v-btn>
-                </v-col>
-                <v-col cols="4" md="2">
-                  <v-btn class="mx-2" elevation=3 @click="onDistinct">distinct</v-btn>
-                </v-col>
+    <v-content>
+      <v-container fluid>
+        <v-expansion-panels v-model="panel" focusable accordion multiple>
+          <v-expansion-panel id="done-by-click">
+            <v-expansion-panel-header>Done by Click</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-row class="d-flex flex-row">
+                <insta-stepper-distinct :local-logger="pushToSnackbar"></insta-stepper-distinct>
+                <v-tooltip id="button-get-selected" cols="4" xs="2" bottom>
+                  <template #activator="{ on }">
+                    <v-btn class="ma-1 pa-1" elevation=1 color="primary" dark v-on="on"
+                           @click="onGetSelectedRange">
+                      selected
+                    </v-btn>
+                  </template>
+                  <span>Tooltip</span>
+                </v-tooltip>
+                <v-btn class="ma-1 pa-1" elevation=1 cols="4" xs="2" @click="onGetSurrounding">surround</v-btn>
               </v-row>
-            </v-col>
-          </v-row>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-      <v-expansion-panel id="cros-tab">
-        <v-expansion-panel-header>CrosTab</v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <v-row>
-            <v-col cols="12">
-              <v-row justify="center">
-                <v-col cols="4" xs="2">
-                  <v-btn class="mx-4 " elevation=3 @click="onShowDialog">dialog</v-btn>
-                </v-col>
-                <v-col cols="4" md="2">
-                  <v-btn class="mx-2" elevation=3 @click="onGetSurrounding">surround</v-btn>
-                </v-col>
-                <v-col cols="4" md="2">
-                  <v-btn class="mx-2" elevation=3 @click="onDistinct">distinct</v-btn>
-                </v-col>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+          <v-expansion-panel id="cros-tab">
+            <v-expansion-panel-header>CrosTab</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-row>
+                <!--                <v-col cols="12">-->
+                <v-combobox
+                    v-model="select"
+                    :items="fields"
+                    chips
+                    label="Side"
+                ></v-combobox>
+                <v-combobox
+                    v-model="select"
+                    :items="fields"
+                    chips
+                    label="Banner"
+                ></v-combobox>
+                <v-combobox
+                    v-model="selects"
+                    :items="aggregates"
+                    chips
+                    multiple
+                    label="Aggregates"
+                ></v-combobox>
+                <v-combobox
+                    v-model="selects"
+                    :items="filters"
+                    chips
+                    multiple
+                    label="Filters"
+                ></v-combobox>
+                <!--                </v-col>-->
+                <v-btn color="primary" class="elevation-0" block dark>
+                  Cross table
+                </v-btn>
               </v-row>
-            </v-col>
-          </v-row>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
-    <v-container fluid>
-      <div class="text-center">
-        <p>Choose the button below to set the color of the selected range to green.</p>
-        <v-subheader>Last selected: {{address}}</v-subheader>
-        <!--        <br/>-->
-        <!--        <h3>Try it out</h3>-->
-        <v-subheader class="headline">Try it out</v-subheader>
-        <v-dialog v-model="dialog" width="500">
-          <template v-slot:activator="{ on }">
-            <v-btn color="red lighten-2" dark v-on="on">
-              choose range
-            </v-btn>
-          </template>
-          <v-card>
-            <v-card-title class="headline grey lighten-2" primary-title>
-              choose range
-            </v-card-title>
-            <v-card-text>
-              Please choose a target range in the worksheet. Then return and click 'confirm'.
-            </v-card-text>
-            <v-divider></v-divider>
-            <v-card-actions>
-              <div class="flex-grow-1"></div>
-              <v-btn color="primary" text @click="onChooseRange">
-                confirm
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </div>
-      <v-card max-width="400" class="mx-auto">
-        <v-card-text>
-          <v-chip-group multiple column active-class="primary--text">
-            <v-chip label color="primary" v-for="tag in tags" :key="tag">
-              {{ tag }}
-            </v-chip>
-          </v-chip-group>
-        </v-card-text>
-      </v-card>
-      <div class="text-center ma-2">
-        <v-subheader class="headline">Snackbar</v-subheader>
-        <!--        <v-btn dark @click="onSnackbarClicked()">Open Snackbar</v-btn>-->
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+        <div class="text-left my-4">
+          <v-subheader>
+            Thanks for using.
+          </v-subheader>
+          <v-subheader v-if="address">
+            Last selected: {{address}}
+          </v-subheader>
+        </div>
         <v-snackbar v-model="snackbar">
           {{ message }}
-          <v-btn color="pink" text @click="snackbar = false">
-            Close
+          <v-btn color="warning" icon light small @click="snackbar = false">
+            <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-snackbar>
-      </div>
-    </v-container>
-  </div>
+      </v-container>
+    </v-content>
+    <v-footer color="cyan lighten-1" app>
+      <div class="flex-grow-1"></div>
+      <span class="white--text">&copy; Leagyun Tech 2019</span>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
-  import { VecX, StrX } from 'xbrief'
+  import { GP } from 'elprimero'
+  import InstaStepperDistinct from '@/components/InstaStepperDistinct.vue'
 
-  StrX.wL('App.vue')
+  GP.now().tag('App.vue') |> console.log
   export default {
     name: 'App',
     methods: {
-      onSnackbarClicked (message = '') {
+      pushToSnackbar (message = '') {
         if (message) this.message = message
         this.snackbar = true
         setTimeout(() => {this.snackbar = false}, 3000)
       },
       onGetSelectedRange () {
-        window.Excel.run(function (context) {
+        window.Excel.run(async (context) => {
           let range = context.workbook.getSelectedRange()
           range.load('address')
           return context.sync()
-            .then(function () {
-              console.log(`The address of the selected range is "${range.address}"`)
+            .then(() => {
+              const addr = range.address;
+              `Select range: ${addr}` |> this.pushToSnackbar
             })
             .catch(error => {
-              error.name.tag(error.message).wL()
+              error.name.tag(error.message) |> this.pushToSnackbar
             })
         })
       },
@@ -151,8 +143,9 @@
           surroundingRegion.load('address')
           await context.sync()
             .then(() => {
-              `Select surrounding region: ${surroundingRegion.address}` |> this.onSnackbarClicked
+              `Select surrounding region: ${surroundingRegion.address}` |> this.pushToSnackbar
               surroundingRegion.select()
+              this.address = surroundingRegion.address
             })
             .catch(error => {
               console.log(`Error: ${error}`)
@@ -180,41 +173,22 @@
             })
         })
       },
-      onDistinct () {
-        const matrixToVector = (matrix) => {
-          const arr = []
-          for (let row of matrix) for (let x of row) arr.push(x)
-          return arr
-        }
-        window.Excel.run(async (context) => {
-          let range = context.workbook.getSelectedRange()
-          range.load('getSurroundingRegion')
-          let surroundingRegion = range.getSurroundingRegion()
-          surroundingRegion.load('address')
-          surroundingRegion.load('values')
-          await context.sync().then(() => {
-            const vec = matrixToVector(surroundingRegion.values)
-            VecX.hBrief(vec).wL();
-            `The address of the surrounding region is "${surroundingRegion.address}"`.wL()
-            // range.getCell(0, 0).values = [[range.getSpillingToRange().address]]
-            surroundingRegion.select()
-          })
-          // .catch(error => {
-          //   console.log(`Error: ${error}`)
-          // })
-        })
-      },
       onGetSelected () {
         window.Excel.run(function (context) {
           const range = context.workbook.getSelectedRange()
           range.load('address')
           return context.sync().then(function () {
-            console.log(`The address of the selected range is "${range.address}"`)
+            const addr = range.address;
+            (`The address of the selected range is "${addr}"`) |> this.pushToSnackbar
+            this.tempAddress = addr
           })
         })
       },
       onSaveSetting () {
-        localStorage.timeStamp = GP.present()
+        // localStorage.timeStamp = GP.present()
+      },
+      deciferCrosTab () {
+
       },
       onChooseRange () {
         window.Excel.run(async (context) => {
@@ -228,11 +202,11 @@
             .then(() => {
               console.log(addr)
               // this.address = range.address;
-              // `Selected region: ${this.address}` |> this.onSnackbarClicked
+              // `Selected region: ${this.address}` |> this.pushToSnackbar
               // localStorage.address = this.address
             })
             .catch(error => {
-              error.name.tag(error.message) |> this.onSnackbarClicked
+              error.name.tag(error.message) |> this.pushToSnackbar
             })
         })
         this.dialog = false
@@ -242,6 +216,7 @@
       if (localStorage.address) {
         this.address = localStorage.address
       }
+      'mounted'.tag('localStorage.address').tag(localStorage.address).wL()
     },
     // watch: {
     //   name (val) {
@@ -249,17 +224,43 @@
     //   }
     // },
     data: () => ({
+      panel: [0, 1],
       address: '',
       dialog: false,
       tags: [
         'distinct',
         'asphalt',
-        'seperate',
+        'separate',
         'concate',
       ],
       snackbar: false,
-      message: 'Hello, I\'m a snackbar'
+      message: 'Hello, I\'m a snackbar 2.',
+      select: 'Programming',
+      selects: ['Programming'],
+      fields: [
+        'City',
+        'Gender',
+        'Taste',
+        'ToM',
+        'Rate'
+      ],
+      aggregates: [
+        'Taste',
+        'ToM',
+        'Rate'
+      ],
+      filters: [
+        'City',
+        'Gender'
+      ],
+      filterInstances: {
+        'City': c => ['Shanghai', 'Beijing'].includes(c),
+        'Gender': g => g === 'Female'
+      }
     }),
+    components: {
+      InstaStepperDistinct
+    }
   }
 </script>
 

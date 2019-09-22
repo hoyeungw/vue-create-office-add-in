@@ -1,28 +1,24 @@
 import Vue from 'vue'
-import Vuetify, {
-  VCard,
-  VRow,
-  VBtn,
-} from 'vuetify/lib'
+import Vuetify from 'vuetify/lib'
 import colors from 'vuetify/lib/util/colors'
-import { Ripple } from 'vuetify/lib/directives'
+// import { Ripple } from 'vuetify/lib/directives'
 
 Vue.use(Vuetify, {
-  components: {
-    VCard,
-    VRow,
-    VBtn,
-  },
-  directives: {
-    Ripple,
-  },
+  // components: {
+  //   VCard,
+  //   VRow,
+  //   VBtn,
+  // },
+  // directives: {
+  //   Ripple,
+  // },
 })
 
 export default new Vuetify({
   theme: {
     themes: {
       light: {
-        primary: colors.teal.lighten1,
+        primary: colors.lightBlue.lighten3,
         secondary: '#424242',
         accent: '#82B1FF',
         error: '#FF5252',
